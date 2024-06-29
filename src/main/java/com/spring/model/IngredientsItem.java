@@ -1,24 +1,24 @@
 package com.spring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderItem {
+public class IngredientsItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
     @ManyToOne
-    private Food food;
-    private int quantity;
-    private Long totalPrice;
-    private List<String> ingredients;
-
+    private IngredientCategory  ingredientCategory;
+    @JsonIgnore
+    @ManyToOne
+    private Restaurant restaurant;
+    private Boolean inStock;
 }

@@ -1,5 +1,6 @@
 package com.spring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,14 +12,15 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderItem {
+public class IngredientCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String name;
+    @JsonIgnore
     @ManyToOne
-    private Food food;
-    private int quantity;
-    private Long totalPrice;
-    private List<String> ingredients;
+    private Restaurant restaurant;
+    @OneToMany(mappedBy = "ingredientCategory", cascade = CascadeType.ALL)
+    private List<IngredientsItem> ingredients;
 
 }

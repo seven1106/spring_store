@@ -1,7 +1,5 @@
 package com.spring.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,27 +12,28 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "orders")
-public class Order {
+public class Food {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    private String name;
+    private String description;
+    private Long price;
+    @Column(length = 1000)
+    @ElementCollection
+    private List<String> images;
     @ManyToOne
-    private User customer;
-
+    private Category foodCategory;
+    private Boolean isAvailable;
     @ManyToOne
-    @JsonIgnore
     private Restaurant restaurant;
-
-    private Long totalAmount;
-    private String status;
+    private Boolean isVeg;
+    private Boolean isSeasonal;
+    @ManyToMany
+    private List<IngredientsItem> ingredients;
     private Date createdAt;
-    @ManyToOne
-    private Address deliveryAddress;
-    @OneToMany
-    private List<OrderItem> orderItems;
-    private int totalItems;
-    private int totalPrice;
-
 }
+
+
+
