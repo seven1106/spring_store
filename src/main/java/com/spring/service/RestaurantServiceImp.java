@@ -109,5 +109,29 @@ public class RestaurantServiceImp implements RestaurantService {
         return restaurant;
     }
 
+    @Override
+    public RestaurantDto addRestaurantToFavorites(Long restaurantId, User user) throws Exception {
+        Restaurant restaurant = findRestaurantById(restaurantId);
+        if (restaurant == null) {
+            throw new Exception("Restaurant not found");
+        }
+        RestaurantDto restaurantDto = new RestaurantDto();
+        restaurantDto.setId(restaurant.getId());
+        restaurantDto.setDescription(restaurant.getDescription());
+        restaurantDto.setId(restaurant.getId());
+        restaurantDto.setImages(restaurant.getImages());
+        restaurantDto.setTitle(restaurant.getName());
+
+        if (user.getFavoriteRestaurants().contains(restaurantDto)) {
+            user.getFavoriteRestaurants().remove(restaurantDto);
+        } else {
+            user.getFavoriteRestaurants().add(restaurantDto);
+        }
+        userRepository.save(user);
+
+        return restaurantDto;
+
+    }
+
 
 }
