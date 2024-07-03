@@ -20,7 +20,7 @@ public class Restaurant {
     private Long id;
     private String name;
     @OneToOne
-    private User customer;
+    private User owner;
     @OneToOne
     private Address address;
     private String description;
