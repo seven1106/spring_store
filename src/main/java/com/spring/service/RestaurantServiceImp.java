@@ -133,5 +133,13 @@ public class RestaurantServiceImp implements RestaurantService {
 
     }
 
-
+    @Override
+    public Restaurant updateRestaurantStatus(Long restaurantId) throws Exception {
+        Restaurant restaurant = findRestaurantById(restaurantId);
+        if (restaurant == null) {
+            throw new Exception("Restaurant not found");
+        }
+        restaurant.setOpeningHours(restaurant.getOpeningHours());
+        return restaurantRepository.save(restaurant);
+}
 }
