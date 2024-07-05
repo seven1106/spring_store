@@ -17,8 +17,6 @@ import java.util.Optional;
 @Service
 public class RestaurantServiceImp implements RestaurantService {
     @Autowired
-    private RestaurantService restaurantService;
-    @Autowired
     private RestaurantRepository restaurantRepository;
     @Autowired
     private AddressRepository addressRepository;
