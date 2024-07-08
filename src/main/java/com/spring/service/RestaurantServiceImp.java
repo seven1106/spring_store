@@ -36,6 +36,7 @@ public class RestaurantServiceImp implements RestaurantService {
         restaurant.setOpeningHours(req.getOpeningHours());
         restaurant.setImages(req.getImages());
         restaurant.setOwner(user);
+        restaurant.setIsOpen(false);
 
         return restaurantRepository.save(restaurant);
     }
@@ -46,26 +47,31 @@ public class RestaurantServiceImp implements RestaurantService {
         if (restaurant == null) {
             throw new Exception("Restaurant not found");
         }
-        if (restaurant.getCuisineType() != null) {
+        if (req.getCuisineType() != null) {
             restaurant.setCuisineType(req.getCuisineType());
         }
-        if (restaurant.getDescription() != null) {
+        if (req.getDescription() != null) {
             restaurant.setDescription(req.getDescription());
         }
-        if (restaurant.getOpeningHours() != null) {
+        if (req.getOpeningHours() != null) {
             restaurant.setOpeningHours(req.getOpeningHours());
         }
-        if (restaurant.getImages() != null) {
+        if (req.getImages() != null) {
             restaurant.setImages(req.getImages());
         }
-        if (restaurant.getName() != null) {
+        if (req.getName() != null) {
             restaurant.setName(req.getName());
         }
-        if (restaurant.getAddress() != null) {
+        if (req.getAddress() != null) {
             restaurant.setAddress(req.getAddress());
         }
-        if (restaurant.getContactInformation() != null) {
+        if (req.getContactInformation() != null) {
             restaurant.setContactInformation(req.getContactInformation());
+        }
+        if (req.getAddress() != null) {
+            Address address = req.getAddress();
+            address = addressRepository.save(address);
+            restaurant.setAddress(address);
         }
         return restaurantRepository.save(restaurant);
     }
@@ -119,16 +125,22 @@ public class RestaurantServiceImp implements RestaurantService {
         restaurantDto.setId(restaurant.getId());
         restaurantDto.setImages(restaurant.getImages());
         restaurantDto.setTitle(restaurant.getName());
-
-        if (user.getFavoriteRestaurants().contains(restaurantDto)) {
-            user.getFavoriteRestaurants().remove(restaurantDto);
-        } else {
-            user.getFavoriteRestaurants().add(restaurantDto);
+        List<RestaurantDto> favorites = user.getFavoriteRestaurants();
+        boolean isFavorite = false;
+        for (RestaurantDto favorite : favorites) {
+            if (favorite.getId().equals(restaurantId)) {
+                isFavorite = true;
+                break;
+            }
         }
+        if (isFavorite) {
+            favorites.remove(restaurantDto);
+        } else {
+            favorites.add(restaurantDto);
+        }
+        user.setFavoriteRestaurants(favorites);
         userRepository.save(user);
-
         return restaurantDto;
-
     }
 
     @Override
@@ -137,7 +149,7 @@ public class RestaurantServiceImp implements RestaurantService {
         if (restaurant == null) {
             throw new Exception("Restaurant not found");
         }
-        restaurant.setOpeningHours(restaurant.getOpeningHours());
+        restaurant.setIsOpen(!restaurant.getIsOpen());
         return restaurantRepository.save(restaurant);
-}
+    }
 }

@@ -49,8 +49,8 @@ public class AdminRestaurantController {
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{restaurantId}/status")
-    public ResponseEntity<Restaurant> updateRestaurantStatus(@RequestBody CreateRestaurantRequest req,
+    @PutMapping("/{restaurantId}/status")
+    public ResponseEntity<Restaurant> updateRestaurantStatus(
                                                              @RequestHeader("Authorization") String token,
                                                              @PathVariable Long restaurantId) throws Exception {
         User user = userService.findUserByJwtToken(token);
