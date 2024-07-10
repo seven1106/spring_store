@@ -3,11 +3,12 @@ package com.spring.service;
 import com.spring.model.Category;
 import com.spring.model.Food;
 import com.spring.model.Restaurant;
+import com.spring.request.CreateFoodRequest;
 
 import java.util.List;
 
 public interface FoodService {
-    public Food createFood(Food food, Category category, Restaurant restaurant);
+    public Food createFood(CreateFoodRequest food, Category category, Restaurant restaurant);
 
     public void deleteFood(Long foodId) throws Exception;
 

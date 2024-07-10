@@ -4,24 +4,27 @@ import com.spring.model.Category;
 import com.spring.model.Food;
 import com.spring.model.Restaurant;
 import com.spring.repository.FoodRepository;
+import com.spring.request.CreateFoodRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 public class FoodServiceImp implements FoodService {
     @Autowired
     private FoodRepository foodRepository;
 
     @Override
-    public Food createFood(Food food, Category category, Restaurant restaurant) {
+    public Food createFood(CreateFoodRequest food, Category category, Restaurant restaurant) {
         Food newFood = new Food();
         newFood.setName(food.getName());
         newFood.setDescription(food.getDescription());
         newFood.setPrice(food.getPrice());
-        newFood.setIsVeg(food.getIsVeg());
-        newFood.setIsSeasonal(food.getIsSeasonal());
+        newFood.setIsVeg(food.isVeg());
+        newFood.setIsSeasonal(food.isSeasonal());
         newFood.setFoodCategory(category);
         newFood.setRestaurant(restaurant);
         newFood.setImages(food.getImages());
