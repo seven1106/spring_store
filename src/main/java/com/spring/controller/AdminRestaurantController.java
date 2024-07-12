@@ -60,11 +60,11 @@ public class AdminRestaurantController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<List<Restaurant>> findRestaurantByUserId(@RequestBody CreateRestaurantRequest req,
+    public ResponseEntity<Restaurant> findRestaurantByUserId(@RequestBody CreateRestaurantRequest req,
                                                                    @RequestHeader("Authorization") String token
     ) throws Exception {
         User user = userService.findUserByJwtToken(token);
-        List<Restaurant> restaurant = restaurantService.getRestaurantsByUserId(user.getId());
+        Restaurant restaurant = restaurantService.getRestaurantsByUserId(user.getId());
 
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
