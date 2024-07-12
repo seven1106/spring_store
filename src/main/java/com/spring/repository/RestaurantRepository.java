@@ -12,5 +12,5 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     List<Restaurant> findBySearchQuery(String query);
 
     @Query("SELECT r FROM Restaurant r WHERE lower(r.owner) = :ownerId")
-    List<Restaurant> findByOwnerId(Long ownerId);
+    Restaurant findByOwnerId(Long ownerId);
 }

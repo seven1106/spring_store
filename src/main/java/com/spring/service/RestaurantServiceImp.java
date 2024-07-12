@@ -105,10 +105,10 @@ public class RestaurantServiceImp implements RestaurantService {
     }
 
     @Override
-    public List<Restaurant> getRestaurantsByUserId(Long userId) throws Exception {
-        List<Restaurant> restaurant = restaurantRepository.findByOwnerId(userId);
-        if (restaurant.isEmpty()) {
-            throw new Exception("Restaurant not found by user id" + userId);
+    public Restaurant getRestaurantsByUserId(Long userId) throws Exception {
+        Restaurant restaurant = restaurantRepository.findByOwnerId(userId);
+        if (restaurant == null) {
+            throw new Exception("Restaurant not found");
         }
         return restaurant;
     }
